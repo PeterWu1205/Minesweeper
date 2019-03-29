@@ -1,5 +1,3 @@
-
-
 import de.bezier.guido.*;
 //Declare and initialize NUM_ROWS and NUM_COLS = 20
 public final static int NUM_ROWS = 20;
@@ -23,10 +21,10 @@ void setup ()
             buttons[i][j] = new MSButton(i,j);
         }
     }
-    
-    
-    
+    for (int i = 0; i < 50; i++)
+    {
     setBombs();
+    }
 }
 public void setBombs()
 {
@@ -53,16 +51,44 @@ public void draw ()
 }
 public boolean isWon()
 {
-    //your code here
-    return false;
+    for (int i = 0; i < NUM_ROWS; i++) 
+    {
+        for (int j = 0; j < NUM_COLS; j++) 
+        {
+            if (!bombs.contains(buttons[i][j]) && buttons[i][j].isClicked() == false) 
+            {
+            return false;
+            }
+        }
+    } 
+    return true;
 }
 public void displayLosingMessage()
 {
-    //your code here
+    buttons[10][8].setLabel("L");
+    buttons[10][9].setLabel("O");
+    buttons[10][10].setLabel("S");
+    buttons[10][11].setLabel("E");
+    buttons[10][12].setLabel("R");
+    for (int i = 0; i < NUM_ROWS; i++) 
+    {
+        for (int j = 0; j < NUM_COLS; j++) 
+        {
+            if (bombs.contains(buttons[i][j]) && (buttons[i][j].isClicked() == false))
+            {
+               buttons[i][j].mousePressed();
+            }
+        }
+    }
 }
 public void displayWinningMessage()
 {
-    //your code here
+    buttons[10][7].setLabel("W");
+    buttons[10][8].setLabel("I");
+    buttons[10][9].setLabel("N");
+    buttons[10][10].setLabel("N");
+    buttons[10][11].setLabel("E");
+    buttons[10][12].setLabel("R");
 }
 
 public class MSButton
@@ -154,7 +180,10 @@ public class MSButton
         {
             return true;
         }
+        else
+        {
         return false;
+        }
     }
     public int countBombs(int row, int col)
     {
@@ -163,7 +192,7 @@ public class MSButton
         {
             for (int j = col -1; j <= col +1 ; j++)
             {
-                if ((isValid(row,col) == true) && (bombs.contains(buttons[row][col])))
+                if ((isValid(i,j) == true) && (bombs.contains(buttons[i][j])))
                 {
                     numBombs++;
                 }
@@ -172,6 +201,3 @@ public class MSButton
         return numBombs;
     }
 }
-
-
-
